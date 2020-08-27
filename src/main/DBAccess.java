@@ -94,11 +94,14 @@ public class DBAccess {
 
 		// SQLの実行
 		String aset ="SELECT * FROM Product WHERE id = ?";
+		String sset ="SELECT stock FROM Stocktable WHERE id = ?";
 
 		try (PreparedStatement ps = getPreparedStatement(aset)) { //() には入れたい文章を！
 			ps.setInt(1, selectnum);
 			//？を指定する。（）には、（？の順番,入れたいもの）を書く。ここでは？1つしかないから1
 
+
+			
 //			ps.executeUpdate(); ←これはデータを上書きしたいとき。ちな何件上書きしましたよ～ってのが返ってくる。
 			ResultSet rseta = ps.executeQuery();             //これは引数なし。選択したいだけのときに良
 			//↑SQLをここで送信する
@@ -118,20 +121,19 @@ public class DBAccess {
 			conn.rollback();
 			System.out.println("rollback");
 		}
-		//closeConnection();　←データベースのクローズ　まだいらない
+			
+		try (PreparedStatement sps = getPreparedStatement(sset)) { 
+			sps.setInt(1, selectnum);
+			
+			ResultSet sseta = sps.executeQuery();
+			
+			while (sseta.next()) {                      
 
-//		ResultSet rseta = st.execute;
+				prd.setStock(sseta.getInt("stock"));
 
-
-//		while (rseta.next()) {                      //これでテーブルの値を一つ一つとってきてprdに入れる
-//
-//			prd.setName(rseta.getString("name"));
-//			prd.setPrice(rseta.getInt("price"));
-//			prd.setDetail(rseta.getString("detail"));
-//			prd.setComment(rseta.getString("comment"));
-//			prd.setStock(rseta.getInt("stock"));
-//
-//		}
+			}
+			
+		}
 
 		return prd;
 
@@ -139,7 +141,7 @@ public class DBAccess {
 
 	public void stockupdate1(int selectnum) throws SQLException {
 
-		String incs = "UPDATE product SET stock = stock + 1 WHERE id = ?;";   //謎のカンマが入っててエラー
+		String incs = "UPDATE stocktable SET stock = stock + 1 WHERE id = ?;";   //謎のカンマが入っててエラー
 		try (PreparedStatement ps = getPreparedStatement(incs)) {
 			ps.setInt(1, selectnum);
 
@@ -153,7 +155,7 @@ public class DBAccess {
 
 	public void stockupdate2(int selectnum) {
 
-		String incs = "UPDATE product SET stock = stock - 1 WHERE id = ?;";
+		String incs = "UPDATE stocktable SET stock = stock - 1 WHERE id = ?;";
 		try (PreparedStatement ps = getPreparedStatement(incs)) {
 			ps.setInt(1, selectnum);
 

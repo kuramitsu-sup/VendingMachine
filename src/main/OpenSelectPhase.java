@@ -8,9 +8,13 @@ public class OpenSelectPhase {
 	public void Main(String syosai, String okotoba) {
 
 		//開封選択画面の表示
+		System.out.println("");
+		System.out.println("------------------------------");
 		System.out.println("1|詳細を見る");
 		System.out.println("2|開ける");
 		System.out.println("3|開けない");
+		System.out.println("------------------------------");
+
 
 		//開封選択入力受付と検証
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,6 +22,7 @@ public class OpenSelectPhase {
 		Integer onum = null;
 
 		do {
+			System.out.println("");
 			System.out.print("どうしますか？:");
 			try {
 			input = br.readLine();

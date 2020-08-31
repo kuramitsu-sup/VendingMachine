@@ -8,12 +8,12 @@ import java.sql.SQLException;
 public class StockSelectPhase {
 
 	boolean back = false;
-	DBAccess productlist;  //メインじゃないけどこっちのクラスでもDBAccessをつかいたい！→×もう一つここでオブジェクト作る
+	DBAccess productlist;  //メインじゃないけどこっちのクラスでもDBAccessをつかいたい→×もう一つここでオブジェクト作る
 	                       //→◎productlist（オブジェクト名）を定義→productlistにDBAccessをセットするだけのメソッドを追加する
-	                       //テキトーにこの辺の白いところ（クラスのフィールドのなか）で右クリック→ソース→getterおよびsetterの生成→で、自動生成できる！
+	                       //テキトーにこの辺の白いところ（クラスのフィールドのなか）で右クリック→ソース→getterおよびsetterの生成→で、自動生成できる
 
 
-		public void setProductlist(DBAccess productlist) {                //これ増やした
+		public void setProductlist(DBAccess productlist) {                //これ増やした。DBをこっちのくらすでも使う
 		this.productlist = productlist;
 	}
 
@@ -30,7 +30,7 @@ public class StockSelectPhase {
 		System.out.println("--------------------");
 		System.out.println("");
 
-		Stockselect(stock,selectnum);
+		Stockselect(stock,selectnum);                     //入力とエラーはじき
 	}
 
 		public void Stockselect(int stock,int selectnum) {           //☆void

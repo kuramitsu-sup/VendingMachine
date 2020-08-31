@@ -19,7 +19,7 @@ public class ActionSelectPhase {
 
 		//行動選択入力受付と検証
 		String input;
-		Integer anum = null;
+		int anum = 0;
 
 		do {
 			System.out.println("");
@@ -28,6 +28,7 @@ public class ActionSelectPhase {
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			input = br.readLine();
 			anum = Integer.valueOf(input);
+
 			}catch(IOException e1){
 
 			}catch(NumberFormatException e2) {

@@ -13,7 +13,7 @@ public class DBAccess {
 	private String password = "user";
 	private String sql = "select id, name, price, detail, comment from product";  //必要な行をとってくる
 	Connection conn;
-	//↑Connectionクラスの変数？BOX「conn」をつくったよ！connectDBメソッドを呼び出すことでここに中身をいれられるよ！
+	//↑Connectionクラスの変数？BOX「conn」をつくった。connectDBメソッドを呼び出すことでここに中身をいれられる！
 
 	public void connectDB() throws SQLException {
 		// DB接続
@@ -34,7 +34,7 @@ public class DBAccess {
 
 		// SQLの実行
 		ResultSet rset = st.executeQuery(sql);
-		
+
 		System.out.println("");
 		System.out.println("------------------------");
 
@@ -66,24 +66,24 @@ public class DBAccess {
 		/* SQLの実行
 			String sql = "select name, price, detail from product;";
 				//""の中の文はmariaDBのクエリで実行できる言語！JAVAではわからない。
-				//だから、このSQL語の文章の文字列をつくって…
+				//だから、このSQL語の文章の文字列をつくって
 
 			ResultSet rset = st.executeQuery(sql);
-				//この文字列をst、文章作成くんに渡すよ！
-				//そしてクエリで実行して帰す(Resultset)のを、rsetにいれたよ！rsetには帰ってきた値が入ってるよ！ここではデータベース丸ごと返してるね！
+				//この文字列をst、文章作成のやつに渡す
+				//そしてクエリで実行して帰す(Resultset)のを、rsetにいれた。rsetには帰ってきた値が入ってる。ここではデータベース丸ごと返してる
 		*/
 
-		String se = "SELECT MAX(id) AS MAX FROM Product;";   //これね、AS　MAXなしでやったらね、行の名前がidからMAX(id)に変わっちゃうの。だから、“id”で返却しようとしても、なんのこっちゃわからないのね。
-		//上と同じようにして、SQL語を作ったのを入れるよ　　　//だから、AS　MAXってして行の名前を変えてあげるの！ほら、わかりやすいでしょ？
+		String se = "SELECT MAX(id) AS MAX FROM Product;";   //AS　MAXなしでやったら、行の名前がidからMAX(id)に変わる。だから、“id”で返却しようとしても、わからない。
+		                                                     //上と同じようにして、SQL語を作ったのを入れる　　　//だから、AS　MAXってして行の名前を変えてあげる。わかりやすい
 
 		ResultSet rseta = st.executeQuery(se);
-		//入れたのをもってってもらって、返すよ
-		while (rseta.next()) {                          //1行しかないけど、Resultset入れたら必ずnextを呼ぶ！！そういうもの！！
+		                                                      //入れたのをもってってもらって、返す
+		while (rseta.next()) {                               //1行しかないけど、Resultset入れたら必ずnextを呼ぶ.そういうもの
 
 		return rseta.getInt("MAX");
-		//Resultset型で返しちゃうと、メインまで変えなきゃいけなくなる。だから、Intでとってきて返すよ。
+		                                                     //Resultset型で返しちゃうと、メインまで変えなきゃいけなくなる。だから、Intでとってきて返す。
 		}
-		return 0;              //とりま0　MAXがなかったらを作らなきゃいけない
+		return 0;                                           //とりま0　MAXがなかったらを作らなきゃいけない
 	}
 
 	public Product shohinout(int selectnum) throws SQLException {
@@ -101,8 +101,8 @@ public class DBAccess {
 			//？を指定する。（）には、（？の順番,入れたいもの）を書く。ここでは？1つしかないから1
 
 
-			
-//			ps.executeUpdate(); ←これはデータを上書きしたいとき。ちな何件上書きしましたよ～ってのが返ってくる。
+
+//			ps.executeUpdate(); ←これはデータを上書きしたいとき。何件上書きしましたよてのが返ってくる。
 			ResultSet rseta = ps.executeQuery();             //これは引数なし。選択したいだけのときに良
 			//↑SQLをここで送信する
 //			conn.commit();
@@ -113,26 +113,24 @@ public class DBAccess {
 				prd.setPrice(rseta.getInt("price"));
 				prd.setDetail(rseta.getString("detail"));
 				prd.setComment(rseta.getString("comment"));
-				prd.setStock(rseta.getInt("stock"));
 
 			}
 
 		} catch (Exception e) {
 			conn.rollback();
-			System.out.println("rollback");
 		}
-			
-		try (PreparedStatement sps = getPreparedStatement(sset)) { 
-			sps.setInt(1, selectnum);
-			
-			ResultSet sseta = sps.executeQuery();
-			
-			while (sseta.next()) {                      
 
-				prd.setStock(sseta.getInt("stock"));
+		try (PreparedStatement sps = getPreparedStatement(sset)) {
+			sps.setInt(1, selectnum);
+
+			ResultSet sseta = sps.executeQuery();
+
+			while (sseta.next()) {
+
+				prd.setStock(sseta.getInt("stock"));           //stockだけ別テーブルからとってくる
 
 			}
-			
+
 		}
 
 		return prd;
@@ -141,7 +139,7 @@ public class DBAccess {
 
 	public void stockupdate1(int selectnum) throws SQLException {
 
-		String incs = "UPDATE stocktable SET stock = stock + 1 WHERE id = ?;";   //謎のカンマが入っててエラー
+		String incs = "UPDATE stocktable SET stock = stock + 1 WHERE id = ?;";   //カンマが入っててエラー
 		try (PreparedStatement ps = getPreparedStatement(incs)) {
 			ps.setInt(1, selectnum);
 

@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class ProductSelectPhase {
 
-	private int max=1;                         //maxを決められた値に
+	private int max=1;                         //maxを１で
 
 
 
@@ -18,16 +18,6 @@ public class ProductSelectPhase {
 			this.max = maxf;
 		}
 	}
-
-
-
-	public int Main() {                                   //メインちゃん引数maxで設定してるから、応急処置。青max使ってても上のメインちゃんが使える。
-
-		return Syohinselect();
-	}
-
-	//Syohinselect
-
 
 	public int Syohinselect() {
 
@@ -65,7 +55,7 @@ public class ProductSelectPhase {
 	}
 
 	public boolean isExtracted(int pnum) {
-		return pnum < 1 || max <  pnum;                                             //whileのtrueの中の判定を取り出した。
+		return pnum < 1 || max <  pnum;                                             //whileのtrueの中の判定を取り出した。入力された数字がマックスより大きくて、1より小さい時ループ
 	}
 
 
